@@ -36,11 +36,27 @@ firewall-cmd --permanent --add-service=https
 firewall-cmd --reload
 ufw disable
 
+crontab -r
 ### SET Nightly Reboot
-(crontab -l 2>/dev/null; echo "* 3 * * * /sbin/shutdown -r +2") | crontab -
+SHUTDOWN_JOB="* 3 * * * /sbin/shutdown -r +2"
+#if [ ! crontab -l |  grep -q "/sbin/shutdown -r +2"]
+#then
+   (crontab -l 2>/dev/null; echo "$SHUTDOWN_JOB") | crontab -
+#fi
+echo $PWD
 
 ### SET Nighlty Backups
-FILE= ./ubuntu_server_backup.sh
-if test -f "$FILE"; then
-    echo "$FILE exists."
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+echo "$SCRIPT_DIR"
+
+BACKUP_SCRIPT="$SCRIPT_DIR/ubuntu_server_backup.sh" 
+BACKUP_JOB="* 1 * * * $BACKUP_SCRIPT"
+echo "hello"
+
+if [ -f "$BACKUP_SCRIPT" ];
+  then
+    echo "$BACKUP_SCRIPT exists."
+    (crontab -l 2>/dev/null; echo "$BACKUP_JOB") | crontab -
+   
 fi
+
