@@ -33,4 +33,10 @@ docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=until_stopped
 apt-get -y install firewalld
 systemctl enable firewalld
 firewall-cmd --permanent --add-service=https
-sudo firewall-cmd --reload
+firewall-cmd --reload
+ufw disable
+
+### SET Nightly Reboot
+(crontab -l 2>/dev/null; echo "* 3 * * * /sbin/shutdown -r +2") | crontab -
+
+### SET Nighlty Backups
