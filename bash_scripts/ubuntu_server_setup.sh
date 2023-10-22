@@ -43,15 +43,15 @@ SHUTDOWN_JOB="* 3 * * * /sbin/shutdown -r +2"
 #then
    (crontab -l 2>/dev/null; echo "$SHUTDOWN_JOB") | crontab -
 #fi
-echo $PWD
+
 
 ### SET Nighlty Backups
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-echo "$SCRIPT_DIR"
+
 
 BACKUP_SCRIPT="$SCRIPT_DIR/ubuntu_server_backup.sh" 
 BACKUP_JOB="* 1 * * * $BACKUP_SCRIPT"
-echo "hello"
+
 
 if [ -f "$BACKUP_SCRIPT" ];
   then
