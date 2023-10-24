@@ -5,7 +5,7 @@
 #
 ####################################
 # What to backup.
-backup_files="/home /var/spool/mail /etc /root /boot /opt"
+backup_files="/home /var /etc /root /boot /opt"
 
 # Where to backup to.
 dest="/mnt/backup"
